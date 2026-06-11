@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 
-import 'controllers/proxy_controller.dart';
-import 'models/proxy_config.dart';
-import 'services/ssh_dynamic_proxy_service.dart';
+import 'controllers/vpn_controller.dart';
+import 'models/wireguard_config.dart';
+import 'services/wireguard_vpn_service.dart';
 import 'views/home_view.dart';
 
-class WarpProxyApp extends StatefulWidget {
-  const WarpProxyApp({super.key});
+class NexusWireGuardApp extends StatefulWidget {
+  const NexusWireGuardApp({super.key});
 
   @override
-  State<WarpProxyApp> createState() => _WarpProxyAppState();
+  State<NexusWireGuardApp> createState() => _NexusWireGuardAppState();
 }
 
-class _WarpProxyAppState extends State<WarpProxyApp> {
-  late final ProxyController controller;
+class _NexusWireGuardAppState extends State<NexusWireGuardApp> {
+  late final VpnController controller;
 
   @override
   void initState() {
     super.initState();
-    controller = ProxyController(
-      service: SshDynamicProxyService(),
-      initialConfig: ProxyConfig.defaultServer(),
+    controller = VpnController(
+      service: WireGuardVpnService(),
+      initialConfig: WireGuardConfig.defaultServer(),
     );
   }
 
@@ -33,7 +33,7 @@ class _WarpProxyAppState extends State<WarpProxyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Nexus Proxy',
+      title: 'Nexus WireGuard',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.dark,

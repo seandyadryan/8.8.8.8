@@ -1,13 +1,14 @@
-# Nexus Proxy
+# Nexus WireGuard
 
-Flutter client bergaya WARP/1.1.1.1 dengan arsitektur MVC. Versi awal ini
-membuka SSH dynamic forwarding dan menyediakan SOCKS5 proxy lokal.
+Flutter client bergaya WARP/1.1.1.1 dengan arsitektur MVC. Versi ini memakai
+WireGuard supaya trafik perangkat bisa diarahkan lewat tunnel VPN, bukan hanya
+SOCKS5 proxy.
 
 ## Stack
 
 - Flutter 3.41.2 via FVM
 - Dart 3.11.0
-- `dartssh2` untuk SSH tunnel dan SOCKS5 dynamic forwarding
+- `wireguard_flutter_plus` untuk tunnel WireGuard lintas platform
 
 ## Arsitektur
 
@@ -17,29 +18,32 @@ lib/
   src/
     app.dart
     controllers/
-      proxy_controller.dart
+      vpn_controller.dart
     models/
       connection_state_model.dart
-      proxy_config.dart
-      proxy_session.dart
+      wireguard_config.dart
+      vpn_session.dart
+      traffic_stats.dart
     services/
-      ssh_dynamic_proxy_service.dart
+      wireguard_vpn_service.dart
     views/
       home_view.dart
 ```
 
 Model menyimpan konfigurasi dan status sesi, controller mengatur alur connect
-dan disconnect, service menangani koneksi SSH, sedangkan view hanya mengurus UI.
+dan disconnect, service memanggil engine WireGuard, sedangkan view hanya
+mengurus UI.
 
 ## Server Default
 
 - Host: `124.158.152.249`
-- SSH Port: `22`
-- Username: `nexus`
-- SOCKS5 lokal: `127.0.0.1:1080`
+- UDP Port: `51820`
+- Client Address: `10.8.0.2/32`
+- Allowed IPs: `0.0.0.0/0, ::/0`
+- DNS: `1.1.1.1, 8.8.8.8`
 
-Password tidak disimpan di source code. Masukkan password lewat field aplikasi
-saat ingin connect.
+Private key client dan public key server tidak disimpan di source code.
+Masukkan key WireGuard lewat field aplikasi saat ingin connect.
 
 ## Menjalankan
 
@@ -48,12 +52,11 @@ saat ingin connect.
 & 'C:\Users\seandy.nugraha\fvm\versions\3.41.2\bin\flutter.bat' run -d windows
 ```
 
-Setelah status menjadi Connected, arahkan browser atau aplikasi yang mendukung
-SOCKS5 ke `127.0.0.1:1080`.
+Catatan Windows: plugin native membutuhkan Developer Mode untuk symlink Flutter
+dan aplikasi harus dijalankan sebagai Administrator agar bisa membuat tunnel.
 
 ## Catatan
 
-Ini adalah proxy SOCKS5 melalui SSH, bukan VPN kernel-level seperti Cloudflare
-WARP. Untuk membuat semua trafik perangkat otomatis lewat tunnel, tahap
-berikutnya perlu modul native per platform, misalnya Android `VpnService`, iOS
-Network Extension, dan integrasi proxy sistem untuk desktop.
+Server Ubuntu tetap harus dipasang WireGuard, dibuatkan keypair server/client,
+dan firewall harus membuka port UDP WireGuard. Untuk iOS/macOS, Apple Network
+Extension dan App Group perlu dikonfigurasi di Xcode sebelum tunnel bisa aktif.

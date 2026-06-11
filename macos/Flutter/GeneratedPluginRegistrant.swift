@@ -5,6 +5,8 @@
 import FlutterMacOS
 import Foundation
 
+import wireguard_flutter_plus
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
+  WireguardFlutterPlugin.register(with: registry.registrar(forPlugin: "WireguardFlutterPlugin"))
 }

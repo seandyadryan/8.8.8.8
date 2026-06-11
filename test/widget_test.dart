@@ -3,12 +3,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:warp_proxy_client/src/app.dart';
 
 void main() {
-  testWidgets('renders proxy dashboard', (WidgetTester tester) async {
-    await tester.pumpWidget(const WarpProxyApp());
+  testWidgets('renders WireGuard dashboard', (WidgetTester tester) async {
+    await tester.pumpWidget(const NexusWireGuardApp());
 
-    expect(find.text('Nexus Proxy'), findsOneWidget);
-    expect(find.text('Server'), findsOneWidget);
-    expect(find.text('Proxy mati'), findsOneWidget);
-    expect(find.text('SOCKS5 proxy: 127.0.0.1:1080'), findsOneWidget);
+    expect(find.text('Nexus WireGuard'), findsOneWidget);
+    expect(find.text('WireGuard Profile'), findsOneWidget);
+    expect(find.text('VPN mati'), findsOneWidget);
+    expect(find.text('Preview .conf'), findsOneWidget);
   });
 }

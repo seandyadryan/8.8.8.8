@@ -1,4 +1,4 @@
-enum ProxyConnectionStatus {
+enum VpnConnectionStatus {
   disconnected,
   connecting,
   connected,
@@ -6,18 +6,18 @@ enum ProxyConnectionStatus {
   error,
 }
 
-extension ProxyConnectionStatusLabel on ProxyConnectionStatus {
+extension VpnConnectionStatusLabel on VpnConnectionStatus {
   String get label {
     switch (this) {
-      case ProxyConnectionStatus.disconnected:
+      case VpnConnectionStatus.disconnected:
         return 'Disconnected';
-      case ProxyConnectionStatus.connecting:
+      case VpnConnectionStatus.connecting:
         return 'Connecting';
-      case ProxyConnectionStatus.connected:
+      case VpnConnectionStatus.connected:
         return 'Connected';
-      case ProxyConnectionStatus.disconnecting:
+      case VpnConnectionStatus.disconnecting:
         return 'Disconnecting';
-      case ProxyConnectionStatus.error:
+      case VpnConnectionStatus.error:
         return 'Connection error';
     }
   }
