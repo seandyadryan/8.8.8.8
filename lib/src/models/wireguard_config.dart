@@ -24,7 +24,7 @@ class WireGuardConfig {
       serverPublicKey: '',
       endpointHost: '124.158.152.249',
       endpointPort: 51820,
-      allowedIps: '0.0.0.0/0, ::/0',
+      allowedIps: '0.0.0.0/0',
       persistentKeepalive: 25,
       providerBundleIdentifier: 'com.example.warpProxyClient.WGExtension',
       iosAppGroup: 'group.com.example.warpProxyClient',
